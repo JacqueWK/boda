@@ -4,51 +4,60 @@
 <meta charset="UTF-8">
 <title>Nuestra Boda</title>
 
-<!-- Fuente elegante -->
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
 body {
     margin: 0;
     font-family: 'Playfair Display', serif;
-    background: linear-gradient(135deg, #f8e1e7, #e6d3f3);
-    text-align: center;
-    color: #333;
+    background: linear-gradient(to bottom, #fff8f0, #f3e5d8);
+    overflow-x: hidden;
 }
 
-/* ANIMACIÓN ENTRADA */
-.fade {
-    animation: fadeIn 2s ease;
+/* INTRO */
+#intro {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #fff8f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    flex-direction: column;
 }
 
-@keyframes fadeIn {
-    from {opacity: 0; transform: translateY(30px);}
-    to {opacity: 1; transform: translateY(0);}
+#intro button {
+    margin-top: 20px;
 }
 
+/* CONTENIDO */
 .container {
+    display: none;
+    text-align: center;
     padding: 40px 20px;
 }
 
+/* TARJETA */
 .box {
     background: white;
     border-radius: 20px;
     padding: 40px;
     max-width: 650px;
     margin: auto;
-    box-shadow: 0px 15px 30px rgba(0,0,0,0.2);
+    box-shadow: 0px 20px 40px rgba(0,0,0,0.2);
+    animation: fadeIn 2s ease;
 }
 
 h1 {
     font-family: 'Great Vibes', cursive;
-    font-size: 55px;
-    margin-bottom: 10px;
+    font-size: 60px;
+    color: #c9a46c;
 }
 
 .names {
-    font-size: 38px;
+    font-size: 40px;
     color: #b76e79;
-    margin: 20px 0;
 }
 
 .details {
@@ -58,104 +67,105 @@ h1 {
 
 button {
     padding: 12px 25px;
-    border: none;
     border-radius: 25px;
-    background: #b76e79;
+    border: none;
+    background: #c9a46c;
     color: white;
-    font-size: 16px;
     cursor: pointer;
-    margin: 10px;
 }
 
-button:hover {
-    background: #9c5a63;
+/* ANIMACIÓN */
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1;}
 }
 
-#countdown {
-    font-size: 25px;
-    margin-top: 20px;
-    color: #7a4c8c;
+/* PÉTALOS */
+.petalo {
+    position: fixed;
+    top: -10px;
+    width: 10px;
+    height: 10px;
+    background: pink;
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: caer linear infinite;
+}
+
+@keyframes caer {
+    to {
+        transform: translateY(100vh);
+    }
 }
 
 /* GALERÍA */
-.gallery img {
+img {
     width: 100%;
     border-radius: 15px;
     margin-top: 10px;
 }
-
-/* RSVP */
-input {
-    padding: 10px;
-    margin: 5px;
-    width: 80%;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-}
-
 </style>
 </head>
 
 <body>
 
-<div class="container fade">
+<!-- INTRO -->
+<div id="intro">
+    <h1>Victor y Jacqueline</h1>
+    <button onclick="entrar()">Entrar a la invitación 💌</button>
+</div>
+
+<!-- CONTENIDO -->
+<div class="container" id="contenido">
     <div class="box">
 
         <h1>¡Nos Casamos!</h1>
 
         <div class="names">
-            Jacqueline & [Tu pareja]
+            Victor y Jacqueline
         </div>
 
         <p class="details">
-            Con la bendición de nuestras familias
-        </p>
-
-        <p class="details">
-            📅 20 de Diciembre 2026<br>
-            ⏰ 5:00 PM<br>
+            📅 15 de AGOSTO 2026<br>
+            ⏰ 1:00 PM<br>
             📍 Puebla, México
         </p>
 
-        <!-- CUENTA REGRESIVA -->
         <div id="countdown"></div>
 
-        <!-- BOTONES -->
         <br>
         <button onclick="abrirMapa()">📍 Ver ubicación</button>
-        <button onclick="document.getElementById('musica').play()">🎵 Música</button>
 
-        <!-- MÚSICA -->
-        <audio id="musica" loop>
-            <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mp3">
-        </audio>
-
-        <!-- GALERÍA -->
         <h2>Nuestra historia 💕</h2>
-        <div class="gallery">
-            <img src="https://picsum.photos/600/400?random=1">
-            <img src="https://picsum.photos/600/400?random=2">
-        </div>
-
-        <!-- RSVP -->
-        <h2>Confirmar asistencia</h2>
-        <input type="text" placeholder="Tu nombre"><br>
-        <button onclick="alert('Gracias por confirmar ❤️')">Confirmar</button>
+        <img src="https://picsum.photos/600/400?1">
+        <img src="https://picsum.photos/600/400?2">
 
     </div>
 </div>
 
+<!-- MÚSICA -->
+<audio id="musica" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3">
+</audio>
+
 <script>
+// ENTRAR
+function entrar() {
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("contenido").style.display = "block";
+    document.getElementById("musica").play();
+}
+
 // CUENTA REGRESIVA
 var fecha = new Date("Dec 20, 2026 17:00:00").getTime();
 
 setInterval(function() {
     var ahora = new Date().getTime();
-    var distancia = fecha - ahora;
+    var d = fecha - ahora;
 
-    var dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
-    var horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+    var dias = Math.floor(d / (1000*60*60*24));
+    var horas = Math.floor((d%(1000*60*60*24))/(1000*60*60));
+    var minutos = Math.floor((d%(1000*60*60))/(1000*60));
 
     document.getElementById("countdown").innerHTML =
         dias + " días " + horas + " hrs " + minutos + " min";
@@ -165,6 +175,17 @@ setInterval(function() {
 function abrirMapa() {
     window.open("https://maps.google.com?q=Puebla");
 }
+
+// PÉTALOS
+setInterval(() => {
+    let p = document.createElement("div");
+    p.className = "petalo";
+    p.style.left = Math.random() * 100 + "vw";
+    p.style.animationDuration = (Math.random()*3+2) + "s";
+    document.body.appendChild(p);
+
+    setTimeout(()=>p.remove(),5000);
+}, 300);
 </script>
 
 </body>
