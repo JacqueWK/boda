@@ -27,11 +27,6 @@ body {
     flex-direction: column;
 }
 
-#intro button {
-    margin-top: 20px;
-}
-
-/* CONTENIDO */
 .container {
     display: none;
     text-align: center;
@@ -84,11 +79,9 @@ button {
 .petalo {
     position: fixed;
     top: -10px;
-    width: 50px;
-    height: 50px;
-    background: pink;
+    background: #ffc0cb;
     border-radius: 50%;
-    opacity: 0.7;
+    opacity: 0.8;
     animation: caer linear infinite;
 }
 
@@ -138,7 +131,7 @@ img {
 
         <h2>Nuestra historia 💕</h2>
         <img src="foto1.jpg">
-        <img src="https://picsum.photos/600/400?2">
+        <img src="foto2.jpg">
 
     </div>
 </div>
@@ -156,66 +149,54 @@ function entrar() {
     document.getElementById("musica").play();
 }
 
-// CUENTA REGRESIVA
-var fecha = new Date("Dec 20, 2026 17:00:00").getTime();
-
-setInterval(function() {
-    var ahora = new Date().getTime();
-    var d = fecha - ahora;
-
-    var dias = Math.floor(d / (1000*60*60*24));
-    var horas = Math.floor((d%(1000*60*60*24))/(1000*60*60));
-    var minutos = Math.floor((d%(1000*60*60))/(1000*60));
-
-    document.getElementById("countdown").innerHTML =
-        dias + " días " + horas + " hrs " + minutos + " min";
-}, 1000);
-
-// MAPA
-function abrirMapa() {
-    window.open("https://maps.google.com?q=Puebla");
-}
-
-// PÉTALOS
-setInterval(() => {
-    let p = document.createElement("div");
-    p.className = "petalo";
-    p.style.left = Math.random() * 100 + "vw";
-    p.style.animationDuration = (Math.random()*3+2) + "s";
-    document.body.appendChild(p);
-
-    setTimeout(()=>p.remove(),5000);
-}, 300);
-</script>
-<script>
+// CONTADOR (CORREGIDO)
 function actualizarContador() {
 
-    // Fecha del evento (AÑO, MES-1, DÍA, HORA, MINUTO)
     const fechaEvento = new Date(2026, 7, 15, 13, 0, 0);
-
     const ahora = new Date();
 
-    const diferencia = fechaEvento.getTime() - ahora.getTime();
+    const diferencia = fechaEvento - ahora;
 
     if (diferencia <= 0) {
         document.getElementById("countdown").innerHTML = "¡Hoy es el gran día! 💍";
         return;
     }
 
-    const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+    const dias = Math.ceil(diferencia / (1000 * 60 * 60 * 24));
     const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
     const minutos = Math.floor((diferencia / (1000 * 60)) % 60);
-    const segundos = Math.floor((diferencia / 1000) % 60);
 
     document.getElementById("countdown").innerHTML =
-        `${dias} días ${horas} hrs ${minutos} min ${segundos} seg`;
+        dias + " días " + horas + " hrs " + minutos + " min";
 }
 
-// Ejecutar inmediatamente
 actualizarContador();
-
-// Ejecutar cada segundo (sin duplicaciones)
 setInterval(actualizarContador, 1000);
+
+// MAPA
+function abrirMapa() {
+    window.open("https://maps.google.com?q=Puebla");
+}
+
+// PÉTALOS GRANDES Y VARIADOS 🌸
+setInterval(() => {
+    let p = document.createElement("div");
+    p.className = "petalo";
+
+    p.style.left = Math.random() * 100 + "vw";
+
+    let size = Math.random() * 20 + 20; // tamaño entre 20 y 40px
+    p.style.width = size + "px";
+    p.style.height = size + "px";
+
+    p.style.animationDuration = (Math.random()*4+3) + "s";
+
+    document.body.appendChild(p);
+
+    setTimeout(()=>p.remove(),7000);
+}, 300);
+
 </script>
+
 </body>
 </html>
