@@ -1,103 +1,171 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Invitación de Boda</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Georgia', serif;
-            background: linear-gradient(to right, #f8e1e7, #e6d3f3);
-            color: #333;
-            text-align: center;
-        }
+<meta charset="UTF-8">
+<title>Nuestra Boda</title>
 
-        .container {
-            padding: 40px 20px;
-        }
+<!-- Fuente elegante -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
 
-        h1 {
-            font-size: 50px;
-            margin-bottom: 10px;
-        }
+<style>
+body {
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    background: linear-gradient(135deg, #f8e1e7, #e6d3f3);
+    text-align: center;
+    color: #333;
+}
 
-        h2 {
-            font-size: 30px;
-            margin-top: 0;
-            color: #7a4c8c;
-        }
+/* ANIMACIÓN ENTRADA */
+.fade {
+    animation: fadeIn 2s ease;
+}
 
-        .names {
-            font-size: 40px;
-            margin: 30px 0;
-            font-weight: bold;
-        }
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(30px);}
+    to {opacity: 1; transform: translateY(0);}
+}
 
-        .details {
-            font-size: 20px;
-            margin: 20px 0;
-        }
+.container {
+    padding: 40px 20px;
+}
 
-        .box {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin: 20px auto;
-            max-width: 600px;
-            box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
-        }
+.box {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 650px;
+    margin: auto;
+    box-shadow: 0px 15px 30px rgba(0,0,0,0.2);
+}
 
-        .footer {
-            margin-top: 40px;
-            font-size: 18px;
-            color: #555;
-        }
+h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 55px;
+    margin-bottom: 10px;
+}
 
-        .heart {
-            color: #e91e63;
-            font-size: 30px;
-        }
+.names {
+    font-size: 38px;
+    color: #b76e79;
+    margin: 20px 0;
+}
 
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 35px;
-            }
-            .names {
-                font-size: 28px;
-            }
-        }
-    </style>
+.details {
+    font-size: 20px;
+    margin: 15px 0;
+}
+
+button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    background: #b76e79;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+button:hover {
+    background: #9c5a63;
+}
+
+#countdown {
+    font-size: 25px;
+    margin-top: 20px;
+    color: #7a4c8c;
+}
+
+/* GALERÍA */
+.gallery img {
+    width: 100%;
+    border-radius: 15px;
+    margin-top: 10px;
+}
+
+/* RSVP */
+input {
+    padding: 10px;
+    margin: 5px;
+    width: 80%;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+</style>
 </head>
+
 <body>
 
-    <div class="container">
-        <div class="box">
-            <h1>¡Nos Casamos!</h1>
-            <p class="heart">❤</p>
+<div class="container fade">
+    <div class="box">
 
-            <div class="names">
-                Jacqueline & [Nombre de tu pareja]
-            </div>
+        <h1>¡Nos Casamos!</h1>
 
-            <h2>Te invitamos a compartir este día tan especial</h2>
-
-            <div class="details">
-                📅 Fecha: 20 de Diciembre 2026<br><br>
-                ⏰ Hora: 5:00 PM<br><br>
-                📍 Lugar: Salón Jardín Los Encinos<br>
-                Puebla, México
-            </div>
-
-            <div class="details">
-                Será un honor contar con tu presencia
-            </div>
-
-            <div class="footer">
-                Confirmar asistencia:<br>
-                📞 222-123-4567
-            </div>
+        <div class="names">
+            Jacqueline & [Tu pareja]
         </div>
+
+        <p class="details">
+            Con la bendición de nuestras familias
+        </p>
+
+        <p class="details">
+            📅 20 de Diciembre 2026<br>
+            ⏰ 5:00 PM<br>
+            📍 Puebla, México
+        </p>
+
+        <!-- CUENTA REGRESIVA -->
+        <div id="countdown"></div>
+
+        <!-- BOTONES -->
+        <br>
+        <button onclick="abrirMapa()">📍 Ver ubicación</button>
+        <button onclick="document.getElementById('musica').play()">🎵 Música</button>
+
+        <!-- MÚSICA -->
+        <audio id="musica" loop>
+            <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mp3">
+        </audio>
+
+        <!-- GALERÍA -->
+        <h2>Nuestra historia 💕</h2>
+        <div class="gallery">
+            <img src="https://picsum.photos/600/400?random=1">
+            <img src="https://picsum.photos/600/400?random=2">
+        </div>
+
+        <!-- RSVP -->
+        <h2>Confirmar asistencia</h2>
+        <input type="text" placeholder="Tu nombre"><br>
+        <button onclick="alert('Gracias por confirmar ❤️')">Confirmar</button>
+
     </div>
+</div>
+
+<script>
+// CUENTA REGRESIVA
+var fecha = new Date("Dec 20, 2026 17:00:00").getTime();
+
+setInterval(function() {
+    var ahora = new Date().getTime();
+    var distancia = fecha - ahora;
+
+    var dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+    var horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+
+    document.getElementById("countdown").innerHTML =
+        dias + " días " + horas + " hrs " + minutos + " min";
+}, 1000);
+
+// MAPA
+function abrirMapa() {
+    window.open("https://maps.google.com?q=Puebla");
+}
+</script>
 
 </body>
 </html>
