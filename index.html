@@ -93,11 +93,32 @@ button {
     }
 }
 
-/* GALERÍA */
+/* GALERÍA GENERAL */
 img {
     width: 100%;
     border-radius: 15px;
     margin-top: 10px;
+}
+
+/* GALERÍA PINTEREST 💎 */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.gallery img {
+    width: 100%;
+}
+
+/* FOTO GRANDE */
+.grande {
+    grid-column: span 2;
+}
+
+/* FOTO HORIZONTAL */
+.horizontal {
+    grid-column: span 2;
 }
 </style>
 </head>
@@ -133,13 +154,13 @@ img {
 
         <h2>Nuestra historia 💕</h2>
 
-<div class="gallery">
-    <img src="foto1.jpg" class="grande">
-    <img src="foto2.jpg">
-    <img src="foto3.jpg">
-    <img src="foto4.jpg" class="horizontal">
-    <img src="foto5.jpg">
-</div>
+        <div class="gallery">
+            <img src="foto1.jpg" class="grande">
+            <img src="foto2.jpg">
+            <img src="foto3.jpg">
+            <img src="foto4.jpg" class="horizontal">
+            <img src="foto5.jpg">
+        </div>
 
     </div>
 </div>
@@ -157,9 +178,8 @@ function entrar() {
     document.getElementById("musica").play();
 }
 
-// CONTADOR (CORREGIDO)
+// CONTADOR
 function actualizarContador() {
-
     const fechaEvento = new Date(2026, 7, 15, 13, 0, 0);
     const ahora = new Date();
 
@@ -186,16 +206,19 @@ function abrirMapa() {
     window.open("https://maps.google.com?q=Puebla");
 }
 
-// PÉTALOS GRANDES Y VARIADOS 🌸
+// PÉTALOS MEJORADOS 🌸
 setInterval(() => {
     let p = document.createElement("div");
     p.className = "petalo";
 
     p.style.left = Math.random() * 100 + "vw";
 
-    let size = Math.random() * 20 + 20; // tamaño entre 20 y 40px
+    let size = Math.random() * 20 + 15;
     p.style.width = size + "px";
-    p.style.height = size + "px";
+    p.style.height = size * 1.5 + "px";
+
+    // ROTACIÓN (CLAVE)
+    p.style.transform = `rotate(${Math.random()*360}deg)`;
 
     p.style.animationDuration = (Math.random()*4+3) + "s";
 
@@ -203,7 +226,6 @@ setInterval(() => {
 
     setTimeout(()=>p.remove(),7000);
 }, 300);
-
 </script>
 
 </body>
