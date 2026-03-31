@@ -46,10 +46,8 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             border: 1px solid #f3e5d8;
             position: relative;
-            animation: fadeIn 2s ease;
         }
 
-        /* Detalle decorativo superior */
         .box::before {
             content: '♥';
             position: absolute;
@@ -62,13 +60,13 @@
 
         h1 {
             font-family: 'Great Vibes', cursive;
-            font-size: 60px;
+            font-size: clamp(40px, 10vw, 60px);
             color: #c9a46c;
             margin-bottom: 10px;
         }
 
         .names {
-            font-size: 40px;
+            font-size: clamp(25px, 8vw, 40px);
             color: #b76e79;
             margin-bottom: 20px;
         }
@@ -95,13 +93,31 @@
             font-size: 16px;
             font-family: 'Playfair Display', serif;
             cursor: pointer;
-            transition: transform 0.3s ease, background 0.3s ease;
+            transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(201, 164, 108, 0.3);
         }
 
         button:hover {
             background: #b8935a;
             transform: scale(1.05);
+        }
+
+        /* BOTÓN MUTE */
+        #muteBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #c9a46c;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            cursor: pointer;
         }
 
         /* PÉTALOS */
@@ -117,9 +133,7 @@
         }
 
         @keyframes caer {
-            to {
-                transform: translateY(110vh) rotate(360deg);
-            }
+            to { transform: translateY(110vh) rotate(360deg); }
         }
 
         /* GALERÍA */
@@ -135,17 +149,12 @@
             height: 250px;
             object-fit: cover;
             border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
         .grande, .horizontal {
             grid-column: span 2;
             height: 350px !important;
-        }
-
-        @keyframes fadeIn {
-            from {opacity: 0; transform: translateY(20px);}
-            to {opacity: 1;}
         }
     </style>
 </head>
@@ -157,14 +166,12 @@
     <button onclick="entrar()">Entrar a la invitación 💌</button>
 </div>
 
+<button id="muteBtn" onclick="toggleMute()">🔊</button>
+
 <div class="container" id="contenido">
     <div class="box" data-aos="fade-up">
-
         <h1>¡Nos Casamos!</h1>
-
-        <div class="names">
-            Victor y Jacqueline
-        </div>
+        <div class="names">Victor y Jacqueline</div>
 
         <p class="details">
             📅 15 de AGOSTO 2026<br>
@@ -185,39 +192,55 @@
             <img src="foto4.jpg" class="horizontal" data-aos="zoom-in">
             <img src="foto5.jpg" data-aos="fade-up">
         </div>
-
     </div>
 </div>
 
-<audio id="musica" loop>
-    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3">
+<audio id="musica" loop preload="auto">
+    <source src="https://www.chosic.com/wp-content/uploads/2021/07/Rainy-Day-Background-Chill-Piano-Music.mp3" type="audio/mpeg">
 </audio>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
 <script>
-// INICIALIZAR ANIMACIONES
+// 1. INICIALIZAR AOS
 AOS.init({
     duration: 1000,
     once: true
 });
 
+// 2. FUNCIÓN DE ENTRADA CORREGIDA
 function entrar() {
+    // Esconder intro y mostrar contenido
     document.getElementById("intro").style.display = "none";
     document.getElementById("contenido").style.display = "block";
+    document.getElementById("muteBtn").style.display = "flex";
     
-    // IMPORTANTE: Refrescar AOS al mostrar el contenido oculto
+    // Iniciar audio con promesa para evitar bloqueos
+    const musica = document.getElementById("musica");
+    musica.play().catch(e => console.log("Audio esperando interacción adicional"));
+
+    // Forzar AOS a reconocer los nuevos elementos visibles
     setTimeout(() => {
         AOS.refresh();
-    }, 100);
-
-    const musica = document.getElementById("musica");
-    musica.play().catch(error => console.log("La reproducción automática requiere interacción previa."));
+    }, 150);
 }
 
-// CONTADOR
+// 3. CONTROL DE MUDO
+function toggleMute() {
+    const musica = document.getElementById("musica");
+    const btn = document.getElementById("muteBtn");
+    if (musica.muted) {
+        musica.muted = false;
+        btn.innerText = "🔊";
+    } else {
+        musica.muted = true;
+        btn.innerText = "🔇";
+    }
+}
+
+// 4. CONTADOR
 function actualizarContador() {
-    const fechaEvento = new Date(2026, 7, 15, 13, 0, 0);
+    const fechaEvento = new Date(2026, 7, 15, 13, 0, 0); // Mes es 0-index (7 = Agosto)
     const ahora = new Date();
     const diferencia = fechaEvento - ahora;
 
@@ -233,28 +256,30 @@ function actualizarContador() {
     document.getElementById("countdown").innerHTML = 
         `Faltan: ${dias} días, ${horas}h y ${minutos}m`;
 }
-
 setInterval(actualizarContador, 1000);
 actualizarContador();
 
-// MAPA (Recuerda poner el link real de Google Maps aquí)
+// 5. MAPA
 function abrirMapa() {
+    // Cambia el '0' por el link real de Google Maps de tu evento
     window.open("https://maps.google.com/?q=Puebla,Mexico");
 }
 
-// PÉTALOS
+// 6. PÉTALOS (Optimizado para no saturar memoria)
 setInterval(() => {
-    let p = document.createElement("div");
-    p.className = "petalo";
-    p.style.left = Math.random() * 100 + "vw";
-    let size = Math.random() * 15 + 10;
-    p.style.width = size + "px";
-    p.style.height = (size * 1.2) + "px";
-    p.style.animationDuration = (Math.random() * 3 + 4) + "s";
-    
-    document.body.appendChild(p);
-    setTimeout(() => p.remove(), 6000);
-}, 400);
+    if(document.getElementById("contenido").style.display === "block") {
+        let p = document.createElement("div");
+        p.className = "petalo";
+        p.style.left = Math.random() * 100 + "vw";
+        let size = Math.random() * 15 + 10;
+        p.style.width = size + "px";
+        p.style.height = (size * 1.2) + "px";
+        p.style.animationDuration = (Math.random() * 3 + 5) + "s";
+        
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 7000);
+    }
+}, 450);
 </script>
 
 </body>
