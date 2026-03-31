@@ -1,150 +1,164 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Nuestra Boda</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestra Boda - Victor y Jacqueline</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-<style>
-body {
-    margin: 0;
-    font-family: 'Playfair Display', serif;
-    background: linear-gradient(to bottom, #fff8f0, #f3e5d8);
-    overflow-x: hidden;
-}
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(to bottom, #fff8f0, #f3e5d8);
+            overflow-x: hidden;
+        }
 
-/* INTRO */
-#intro {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: #fff8f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-    flex-direction: column;
-}
+        /* INTRO */
+        #intro {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: #fff8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            flex-direction: column;
+            text-align: center;
+        }
 
-.container {
-    display: none;
-    text-align: center;
-    padding: 40px 20px;
-}
+        .container {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
 
-/* TARJETA */
-.box {
-    background: white;
-    border-radius: 20px;
-    padding: 40px;
-    max-width: 650px;
-    margin: 40px auto; /* Dale aire arriba y abajo */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    border: 1px solid #f3e5d8;
-    position: relative;
-}
-/* Un detalle decorativo en las esquinas */
-.box::before {
-    content: '♥';
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: #c9a46c;
-    font-size: 20px;
-}    
+        /* TARJETA */
+        .box {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 650px;
+            margin: 40px auto; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid #f3e5d8;
+            position: relative;
+            animation: fadeIn 2s ease;
+        }
 
-h1 {
-    font-family: 'Great Vibes', cursive;
-    font-size: 60px;
-    color: #c9a46c;
-}
+        /* Detalle decorativo superior */
+        .box::before {
+            content: '♥';
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #c9a46c;
+            font-size: 20px;
+        }
 
-.names {
-    font-size: 40px;
-    color: #b76e79;
-}
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 60px;
+            color: #c9a46c;
+            margin-bottom: 10px;
+        }
 
-.details {
-    font-size: 20px;
-    margin: 15px 0;
-}
+        .names {
+            font-size: 40px;
+            color: #b76e79;
+            margin-bottom: 20px;
+        }
 
-button {
-    padding: 12px 25px;
-    border-radius: 25px;
-    border: none;
-    background: #c9a46c;
-    color: white;
-    cursor: pointer;
-}
+        .details {
+            font-size: 20px;
+            margin: 15px 0;
+            line-height: 1.6;
+        }
 
-/* ANIMACIÓN */
-@keyframes fadeIn {
-    from {opacity: 0; transform: translateY(20px);}
-    to {opacity: 1;}
-}
+        #countdown {
+            font-weight: bold;
+            color: #c9a46c;
+            font-size: 1.2rem;
+            margin: 20px 0;
+        }
 
-/* PÉTALOS */
-.petalo {
-    position: fixed;
-    top: -10px;
-    width: 20px;
-    height: 30px;
-    background: #ffb6c1;
-    border-radius: 50% 50% 50% 0;
-    opacity: 0.9;
-    animation: caer linear infinite;
-}
+        button {
+            padding: 12px 30px;
+            border-radius: 25px;
+            border: none;
+            background: #c9a46c;
+            color: white;
+            font-size: 16px;
+            font-family: 'Playfair Display', serif;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+            box-shadow: 0 4px 15px rgba(201, 164, 108, 0.3);
+        }
 
-@keyframes caer {
-    to {
-        transform: translateY(100vh);
-    }
-}
+        button:hover {
+            background: #b8935a;
+            transform: scale(1.05);
+        }
 
-/* GALERÍA GENERAL */
-img {
-    width: 100%;
-    border-radius: 15px;
-    margin-top: 10px;
-}
+        /* PÉTALOS */
+        .petalo {
+            position: fixed;
+            top: -50px;
+            background: #ffb6c1;
+            border-radius: 50% 50% 50% 0;
+            opacity: 0.8;
+            z-index: 1000;
+            pointer-events: none;
+            animation: caer linear infinite;
+        }
 
-/* GALERÍA PINTEREST 💎 */
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-}
+        @keyframes caer {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+            }
+        }
 
-.gallery img {
-    width: 100%;
-}
+        /* GALERÍA */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
 
-/* FOTO GRANDE */
-.grande {
-    grid-column: span 2;
-}
+        .gallery img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
 
-/* FOTO HORIZONTAL */
-.horizontal {
-    grid-column: span 2;
-}
-</style>
+        .grande, .horizontal {
+            grid-column: span 2;
+            height: 350px !important;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(20px);}
+            to {opacity: 1;}
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- INTRO -->
 <div id="intro">
-    <h1>Victor y Jacqueline</h1>
+    <h1 data-aos="zoom-in">Victor y Jacqueline</h1>
     <button onclick="entrar()">Entrar a la invitación 💌</button>
 </div>
 
-<!-- CONTENIDO -->
 <div class="container" id="contenido">
-    <div class="box">
+    <div class="box" data-aos="fade-up">
 
         <h1>¡Nos Casamos!</h1>
 
@@ -160,40 +174,51 @@ img {
 
         <div id="countdown"></div>
 
-        <br>
         <button onclick="abrirMapa()">📍 Ver ubicación</button>
 
-        <h2>Nuestra historia 💕</h2>
+        <h2 style="margin-top: 40px; color: #b76e79;">Nuestra historia 💕</h2>
 
         <div class="gallery">
-            <img src="foto1.jpg" class="grande">
-            <img src="foto2.jpg">
-            <img src="foto3.jpg">
-            <img src="foto4.jpg" class="horizontal">
-            <img src="foto5.jpg">
+            <img src="foto1.jpg" class="grande" data-aos="fade-up">
+            <img src="foto2.jpg" data-aos="fade-right">
+            <img src="foto3.jpg" data-aos="fade-left">
+            <img src="foto4.jpg" class="horizontal" data-aos="zoom-in">
+            <img src="foto5.jpg" data-aos="fade-up">
         </div>
 
     </div>
 </div>
 
-<!-- MÚSICA -->
 <audio id="musica" loop>
     <source src="https://www.bensound.com/bensound-music/bensound-love.mp3">
 </audio>
 
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
 <script>
-// ENTRAR
+// INICIALIZAR ANIMACIONES
+AOS.init({
+    duration: 1000,
+    once: true
+});
+
 function entrar() {
     document.getElementById("intro").style.display = "none";
     document.getElementById("contenido").style.display = "block";
-    document.getElementById("musica").play();
+    
+    // IMPORTANTE: Refrescar AOS al mostrar el contenido oculto
+    setTimeout(() => {
+        AOS.refresh();
+    }, 100);
+
+    const musica = document.getElementById("musica");
+    musica.play().catch(error => console.log("La reproducción automática requiere interacción previa."));
 }
 
 // CONTADOR
 function actualizarContador() {
     const fechaEvento = new Date(2026, 7, 15, 13, 0, 0);
     const ahora = new Date();
-
     const diferencia = fechaEvento - ahora;
 
     if (diferencia <= 0) {
@@ -201,42 +226,35 @@ function actualizarContador() {
         return;
     }
 
-    const dias = Math.ceil(diferencia / (1000 * 60 * 60 * 24));
+    const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
     const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
     const minutos = Math.floor((diferencia / (1000 * 60)) % 60);
 
-    document.getElementById("countdown").innerHTML =
-        dias + " días " + horas + " hrs " + minutos + " min";
+    document.getElementById("countdown").innerHTML = 
+        `Faltan: ${dias} días, ${horas}h y ${minutos}m`;
 }
 
-actualizarContador();
 setInterval(actualizarContador, 1000);
+actualizarContador();
 
-// MAPA
+// MAPA (Recuerda poner el link real de Google Maps aquí)
 function abrirMapa() {
-    window.open("https://maps.google.com?q=Puebla");
+    window.open("https://maps.google.com/?q=Puebla,Mexico");
 }
 
-// PÉTALOS MEJORADOS 🌸
+// PÉTALOS
 setInterval(() => {
     let p = document.createElement("div");
     p.className = "petalo";
-
     p.style.left = Math.random() * 100 + "vw";
-
-    let size = Math.random() * 20 + 15;
+    let size = Math.random() * 15 + 10;
     p.style.width = size + "px";
-    p.style.height = size * 1.5 + "px";
-
-    // ROTACIÓN (CLAVE)
-    p.style.transform = `rotate(${Math.random()*360}deg)`;
-
-    p.style.animationDuration = (Math.random()*4+3) + "s";
-
+    p.style.height = (size * 1.2) + "px";
+    p.style.animationDuration = (Math.random() * 3 + 4) + "s";
+    
     document.body.appendChild(p);
-
-    setTimeout(()=>p.remove(),7000);
-}, 300);
+    setTimeout(() => p.remove(), 6000);
+}, 400);
 </script>
 
 </body>
